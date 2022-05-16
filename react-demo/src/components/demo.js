@@ -2,7 +2,7 @@ import React from "react";
 
 function Demo(props) {
   return (
-    <div className="demo">
+    <div>
       <h2>{props.name}</h2>
       {props.value}
     </div>
