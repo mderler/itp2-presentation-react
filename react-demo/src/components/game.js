@@ -8,7 +8,7 @@ class Game extends React.Component {
   render() {
     return (
       <div>
-        <Board boxes={4} />
+        <Board size={4} />
         <GameBar />
       </div>
     );
@@ -19,28 +19,29 @@ class Board extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      boxes: props.boxes,
+      size: props.size,
+      squares: [],
     };
+
+    const realSize = props.size * props.size;
+    const maxSquares = Math.floor(realSize * 0.25);
+
+    this.state.squares.fill(false, 0, realSize);
+    let running = true;
+    while (running) {}
   }
 
   render() {
-    const boxes = this.props.boxes;
+    const size = this.props.size;
     let content = [];
-    for (let y = 0; y < boxes; y++) {
-      let row = [];
-      for (let x = 0; x < boxes; x++) {
-        let index = x + y * boxes;
-        row.push(
-          <td className="tableSquare">
-            <Square key={index} value={index} />
-          </td>
-        );
-      }
-      content.push(<tr className="tableRow">{row}</tr>);
+    for (let y = 0; y < size; y++) {
+      content.push(<Row row={y} size={size} />);
     }
     return (
-      <div>
-        <table className="boardTable">{content}</table>
+      <div key="board">
+        <table className="boardTable">
+          <tbody>{content}</tbody>
+        </table>
       </div>
     );
   }
@@ -60,16 +61,18 @@ class GameBar extends React.Component {
     return (
       <div>
         <table>
-          <tr>
-            <td>Hits: {this.state.hits}</td>
-            <td>Misses: {this.state.misses}</td>
-            <td>
-              <button>Start</button>
-            </td>
-            <td>
-              <button>Stop</button>
-            </td>
-          </tr>
+          <tbody>
+            <tr>
+              <td>Hits: {this.state.hits}</td>
+              <td>Misses: {this.state.misses}</td>
+              <td>
+                <button>Start</button>
+              </td>
+              <td>
+                <button>Stop</button>
+              </td>
+            </tr>
+          </tbody>
         </table>
       </div>
     );
@@ -77,10 +80,31 @@ class GameBar extends React.Component {
 }
 
 function Square(props) {
+  const squareID = "square" + props.value;
   return (
-    <button key={props.key} className="square" onClick={props.onClick}>
-      {props.value}
-    </button>
+    <td key={"boardSquare" + props.value} className="boardSquare">
+      <button
+        key={squareID}
+        className="square"
+        onClick={console.log.bind(this, "test")}
+      >
+        {props.value}
+      </button>
+    </td>
+  );
+}
+
+function Row(props) {
+  let row = [];
+  for (let x = 0; x < props.size; x++) {
+    const index = x + props.row * props.size;
+    row.push(<Square value={index} />);
+  }
+
+  return (
+    <tr key={"boardRow" + props.row} className="boardRow">
+      {row}
+    </tr>
   );
 }
 
