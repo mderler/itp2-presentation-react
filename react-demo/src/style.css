@@ -14,6 +14,11 @@
   margin-left: 37%;
 }
 
+#board {
+  padding: 30px 0 30px 0;
+  background-color: rgba(203,242,212,1);
+}
+
 .gameItem {
   width: 120px;
   height: 120px;
@@ -25,4 +30,43 @@
 
 #root {
   text-align: center;
+}
+
+.counter {
+  padding-top: 50px;
+  background-color: rgba(99,196,189,1);
+}
+
+.grad1 {
+  padding: 450px;
+  background: linear-gradient(180deg, rgba(99,196,189,1) 35%, rgba(203,242,212,1) 100%);
+}
+
+.game {
+  margin-top: -20px;
+  background-color: rgba(203,242,212,1);
+}
+
+#gameBar {
+  margin-left: 46.2%;
+}
+
+.grad2 {
+  padding: 450px;
+  background: linear-gradient(180deg, rgba(203,242,212,1) 35%, rgba(248,255,219,1) 100%);
+}
+
+.colorchanger { 
+  margin-top: -20px;
+  padding-bottom: 200px;
+  background-color: rgba(248,255,219,1);
+}
+
+.circle {
+  width: 20px;
+  height: 20px;
+  margin-top: 40px;
+  margin-left: 48.5%;
+  padding: 20px 20px 20px 20px;
+  border-radius: 50%;
 }

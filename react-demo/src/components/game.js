@@ -130,21 +130,21 @@ class GameBar extends React.Component {
 
   render() {
     return (
-      <div id="gameBar">
-        <table>
-          <tbody>
-            <tr>
-              <td>Hits: {this.state.hits}</td>
-              <td>Misses: {this.state.misses}</td>
-              <td>
-                <button onClick={() => this.setState({ hits: 0, misses: 0 })}>
-                  Reset
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+        <div id="gameBar">
+          <table>
+            <tbody>
+              <tr>
+                <td>Hits: {this.state.hits}</td>
+                <td>Misses: {this.state.misses}</td>
+                <td>
+                  <button onClick={() => this.setState({ hits: 0, misses: 0 })}>
+                    Reset
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
     );
   }
 }

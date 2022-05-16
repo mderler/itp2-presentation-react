@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 export default function ColorChanger() {
-  const colors = ["white", "green", "blue", "violet", "cyan"];
+  const colors = ["white", "green", "blue", "violet", "cyan", "red", "grey"];
   const [color, setColor] = useState(colors[0]);
 
   const btnList = colors.map((c) => (
@@ -9,5 +9,8 @@ export default function ColorChanger() {
       {c}
     </button>
   ));
-  return <div style={{ background: color }}>{btnList}</div>;
+  return <div>{btnList}
+      <div className="circle" style={{ background: color }}>
+      </div>
+    </div>;
 }

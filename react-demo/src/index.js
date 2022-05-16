@@ -8,10 +8,22 @@ import "./style.css";
 
 function App() {
   return (
-    <div className="center">
-      <Demo name="Counter" value={<Counter />} />
-      <Demo name="Game" value={<Game />} />
-      <Demo name="Color Changer" value={<ColorChanger />} />
+    <div>
+      <div className="center counter">
+        <Demo name="Counter" value={<Counter />} />
+      </div>
+      <div className="grad1">
+
+      </div>
+      <div className="center game">
+        <Demo name="Game" value={<Game />} />
+      </div>
+      <div  className="grad2">
+
+      </div>
+      <div className="center colorchanger">
+        <Demo name="Color Changer" value={<ColorChanger />} />
+      </div>
     </div>
   );
 }
