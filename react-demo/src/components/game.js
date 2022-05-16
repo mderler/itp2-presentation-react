@@ -123,12 +123,23 @@ class GameBar extends React.Component {
     this.state = {
       hits: 0,
       misses: 0,
+      last: 0,
+      now: 0,
     };
     updateGameBarState = updateGameBarState.bind(this);
     getGameBarSate = getGameBarSate.bind(this);
+
+    this.interval = null;
   }
 
   render() {
+    if (this.state.hits === 1) {
+      this.interval = setInterval(() => {
+        this.state.last = this.state.now;
+        this.state.now = this.state.hits;
+        this.setState({});
+      }, 1000);
+    }
     return (
       <div id="gameBar">
         <table>
@@ -136,8 +147,13 @@ class GameBar extends React.Component {
             <tr>
               <td>Hits: {this.state.hits}</td>
               <td>Misses: {this.state.misses}</td>
+              <td>Hits per second: {this.state.now - this.state.last}</td>
               <td>
-                <button onClick={() => this.setState({ hits: 0, misses: 0 })}>
+                <button
+                  onClick={() =>
+                    this.setState({ hits: 0, misses: 0, last: 0, now: 0 })
+                  }
+                >
                   Reset
                 </button>
               </td>
