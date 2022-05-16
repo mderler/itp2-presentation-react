@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 class Game extends React.Component {
   constructor(props) {
@@ -34,9 +34,6 @@ class Board extends React.Component {
     for (let i = 0; i < blackAmount; i++) {
       this.placeBlack();
     }
-    document.getElementById("board").addEventListener("runningToggled", (e) => {
-      this.setState(e.detail);
-    });
   }
 
   placeBlack() {
@@ -77,13 +74,11 @@ class Board extends React.Component {
         const index = x + y * size;
         row.push(
           <td key={index} className="gameItem">
-            {this.state.running && (
-              <Square
-                id={index}
-                onClick={this.squareClicked}
-                black={this.state.squares[index]}
-              />
-            )}
+            <Square
+              id={index}
+              onClick={this.squareClicked}
+              black={this.state.squares[index]}
+            />
           </td>
         );
       }
@@ -128,18 +123,9 @@ class GameBar extends React.Component {
     this.state = {
       hits: 0,
       misses: 0,
-      running: false,
     };
     updateGameBarState = updateGameBarState.bind(this);
     getGameBarSate = getGameBarSate.bind(this);
-  }
-
-  componentDidMount() {
-    document
-      .getElementById("gameBar")
-      .addEventListener("runningToggled", (e) => {
-        this.setState(e.detail);
-      });
   }
 
   render() {
@@ -151,52 +137,15 @@ class GameBar extends React.Component {
               <td>Hits: {this.state.hits}</td>
               <td>Misses: {this.state.misses}</td>
               <td>
-                <button
-                  onClick={() => {
-                    var runningToggled = new CustomEvent("runningToggled", {
-                      detail: { running: true },
-                    });
-                    dispatchEvent(runningToggled);
-                  }}
-                >
-                  Start
+                <button onClick={() => this.setState({ hits: 0, misses: 0 })}>
+                  Reset
                 </button>
               </td>
-              {this.state.running && (
-                <td>
-                  <Timer value={10} />
-                </td>
-              )}
             </tr>
           </tbody>
         </table>
       </div>
     );
-  }
-}
-
-class Timer extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      counter: props.value,
-    };
-  }
-
-  render() {
-    let { counter } = this.state;
-
-    setTimeout(() => {
-      if (counter > 0) {
-        this.setState({ counter: counter - 1 });
-      } else {
-        var runningToggled = new CustomEvent("runningToggled", {
-          detail: { running: false },
-        });
-        dispatchEvent(runningToggled);
-      }
-    }, 1000);
-    return <div>Time: {this.state.counter}</div>;
   }
 }
 
