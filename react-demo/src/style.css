@@ -5,9 +5,9 @@
   border-width: 0px;
 }
 
-.boardTable,
-.boardRow,
-.boardSquare {
+.gameTable,
+.gameRow,
+.gameItem {
   border: 1px solid black;
   border-collapse: collapse;
 }

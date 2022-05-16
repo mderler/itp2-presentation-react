@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 class Game extends React.Component {
   constructor(props) {
@@ -18,33 +18,101 @@ class Game extends React.Component {
 class Board extends React.Component {
   constructor(props) {
     super(props);
+    this.realSize = props.size * props.size;
+
     this.state = {
       size: props.size,
-      squares: [],
+      squares: Array(this.realSize).fill(false),
     };
 
-    const realSize = props.size * props.size;
-    const maxSquares = Math.floor(realSize * 0.25);
+    this.squareClicked = this.squareClicked.bind(this);
+  }
 
-    this.state.squares.fill(false, 0, realSize);
-    let running = true;
-    while (running) {}
+  componentDidMount() {
+    const blackAmount = Math.floor(this.realSize * 0.25);
+
+    for (let i = 0; i < blackAmount; i++) {
+      this.placeBlack();
+    }
+  }
+
+  placeBlack() {
+    let index = Math.floor(Math.random() * this.realSize);
+    const squares = this.state.squares;
+
+    while (true) {
+      if (squares[index] === true) {
+        index = (index + 1) % this.realSize;
+        continue;
+      }
+      squares[index] = true;
+      this.setState({});
+      break;
+    }
+  }
+
+  squareClicked(id) {
+    const squares = this.state.squares;
+    const gameBarState = getGameBarSate();
+
+    if (!squares[id]) {
+      updateGameBarState({ misses: gameBarState.misses + 1 });
+      return;
+    }
+
+    updateGameBarState({ hits: gameBarState.hits + 1 });
+    this.placeBlack();
+    squares[id] = false;
   }
 
   render() {
     const size = this.props.size;
     let content = [];
     for (let y = 0; y < size; y++) {
-      content.push(<Row row={y} size={size} />);
+      let row = [];
+      for (let x = 0; x < size; x++) {
+        const index = x + y * size;
+        row.push(
+          <td key={index} className="gameItem">
+            <Square
+              id={index}
+              onClick={this.squareClicked}
+              black={this.state.squares[index]}
+            />
+          </td>
+        );
+      }
+      content.push(
+        <tr key={y} className="gameRow">
+          {row}
+        </tr>
+      );
     }
     return (
-      <div key="board">
-        <table className="boardTable">
-          <tbody>{content}</tbody>
-        </table>
-      </div>
+      <table className="gameTable">
+        <tbody>{content}</tbody>
+      </table>
     );
   }
+}
+
+function Square(props) {
+  const color = props.black === true ? "black" : "white";
+  return (
+    <button
+      className="square"
+      onMouseDown={props.onClick.bind(this, props.id)}
+      style={{ background: color }}
+    ></button>
+  );
+}
+
+function updateGameBarState(props) {
+  this.setState(props);
+}
+
+function getGameBarSate() {
+  return this.state;
 }
 
 class GameBar extends React.Component {
@@ -53,13 +121,15 @@ class GameBar extends React.Component {
     this.state = {
       hits: 0,
       misses: 0,
-      hps: 0,
     };
+    updateGameBarState = updateGameBarState.bind(this);
+    getGameBarSate = getGameBarSate.bind(this);
+    // toggleGame = toggleGame.bind(this);
   }
 
   render() {
     return (
-      <div>
+      <div id="gameBar">
         <table>
           <tbody>
             <tr>
@@ -79,33 +149,24 @@ class GameBar extends React.Component {
   }
 }
 
-function Square(props) {
-  const squareID = "square" + props.value;
-  return (
-    <td key={"boardSquare" + props.value} className="boardSquare">
-      <button
-        key={squareID}
-        className="square"
-        onClick={console.log.bind(this, "test")}
-      >
-        {props.value}
-      </button>
-    </td>
-  );
-}
-
-function Row(props) {
-  let row = [];
-  for (let x = 0; x < props.size; x++) {
-    const index = x + props.row * props.size;
-    row.push(<Square value={index} />);
+class Timer extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      counter: props.value,
+    };
   }
 
-  return (
-    <tr key={"boardRow" + props.row} className="boardRow">
-      {row}
-    </tr>
-  );
+  render() {
+    let { counter } = this.state;
+
+    setTimeout(() => {
+      if (counter > 0) {
+        this.setState({ counter: counter - 1 });
+      }
+    }, 1000);
+    return <div>Time: {this.state.counter}</div>;
+  }
 }
 
 export default Game;
