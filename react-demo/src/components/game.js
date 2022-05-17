@@ -28,6 +28,8 @@ class Board extends React.Component {
     this.squareClicked = this.squareClicked.bind(this);
   }
 
+  // ---------------
+
   componentDidMount() {
     const blackAmount = Math.floor(this.realSize * 0.25);
 
@@ -35,6 +37,8 @@ class Board extends React.Component {
       this.placeBlack();
     }
   }
+
+  // ---------------
 
   placeBlack() {
     let index = Math.floor(Math.random() * this.realSize);
@@ -90,7 +94,7 @@ class Board extends React.Component {
     }
     return (
       <div id="board">
-        <table className="gameTable">
+        <table className="gameTable square">
           <tbody>{content}</tbody>
         </table>
       </div>
@@ -123,28 +127,45 @@ class GameBar extends React.Component {
     this.state = {
       hits: 0,
       misses: 0,
+      last: 0,
+      now: 0,
+      time: 0
     };
     updateGameBarState = updateGameBarState.bind(this);
     getGameBarSate = getGameBarSate.bind(this);
+
+    this.interval = null;
   }
 
   render() {
+    if (this.state.hits === 1) {
+      this.interval = setInterval(() => {
+        this.state.last = this.state.now;
+        this.state.now = this.state.hits;
+        this.setState({});
+      }, 1000);
+    }
     return (
-        <div id="gameBar">
-          <table>
-            <tbody>
-              <tr>
-                <td>Hits: {this.state.hits}</td>
-                <td>Misses: {this.state.misses}</td>
-                <td>
-                  <button className="button" onClick={() => this.setState({ hits: 0, misses: 0 })}>
-                    Reset
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+      <div id="gameBar">
+        <table>
+          <tbody>
+            <tr>
+              <td>Hits: {this.state.hits}</td>
+              <td>Misses: {this.state.misses}</td>
+              <td>Hits per second: {(this.state.now - this.state.last) * 1}</td>
+              <td>
+                <button
+                  onClick={() =>
+                    this.setState({ hits: 0, misses: 0, last: 0, now: 0 })
+                  }
+                >
+                  Reset
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     );
   }
 }
