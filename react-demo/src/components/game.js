@@ -137,7 +137,7 @@ class GameBar extends React.Component {
                 <td>Hits: {this.state.hits}</td>
                 <td>Misses: {this.state.misses}</td>
                 <td>
-                  <button onClick={() => this.setState({ hits: 0, misses: 0 })}>
+                  <button className="button" onClick={() => this.setState({ hits: 0, misses: 0 })}>
                     Reset
                   </button>
                 </td>

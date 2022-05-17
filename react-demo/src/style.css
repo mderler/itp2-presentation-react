@@ -3,6 +3,7 @@
   min-height: 120px;
   background-color: white;
   border-width: 0px;
+  border-collapse: collapse;
 }
 
 .gameTable,
@@ -30,6 +31,17 @@
 
 #root {
   text-align: center;
+  font-size: 36px;
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  
+}
+
+.button {
+  padding: 10px 15px 10px 15px;
+  font-weight: 800;
+  margin-left: 5px;
+  margin-right: 5px;
+  font-size: 16px;
 }
 
 .counter {
@@ -43,12 +55,12 @@
 }
 
 .game {
-  margin-top: -20px;
+  margin-top: -50px;
   background-color: rgba(203,242,212,1);
 }
 
 #gameBar {
-  margin-left: 46.2%;
+  margin-left: 43%;
 }
 
 .grad2 {
@@ -57,16 +69,16 @@
 }
 
 .colorchanger { 
-  margin-top: -20px;
+  margin-top: -50px;
   padding-bottom: 200px;
   background-color: rgba(248,255,219,1);
 }
 
 .circle {
-  width: 20px;
-  height: 20px;
+  width: 50px;
+  height: 50px;
   margin-top: 40px;
-  margin-left: 48.5%;
+  margin-left: 47.5%;
   padding: 20px 20px 20px 20px;
   border-radius: 50%;
 }

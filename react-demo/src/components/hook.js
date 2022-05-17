@@ -5,7 +5,7 @@ export default function ColorChanger() {
   const [color, setColor] = useState(colors[0]);
 
   const btnList = colors.map((c) => (
-    <button key={c} onClick={() => setColor(c)}>
+    <button className="button" key={c} onClick={() => setColor(c)}>
       {c}
     </button>
   ));
